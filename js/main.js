@@ -75,6 +75,7 @@ window.showAircraftPopup = showAircraftPopup;
 
 // Staged refresh - loads critical data first for faster perceived startup
 async function refreshAll() {
+    console.log('refreshAll started');
     const btn = document.getElementById('refreshBtn');
     if (btn) btn.disabled = true;
     setStatus('Loading critical...', true);
@@ -124,7 +125,9 @@ async function refreshAll() {
 
         // Render map with earthquakes and shipping alert data
         if (isPanelEnabled('map')) {
+            console.log('Starting map render, earthquakes:', earthquakes?.length);
             const activityData = analyzeHotspotActivity(allNews);
+            console.log('Activity data ready, calling renderGlobalMap');
             await renderGlobalMap(
                 activityData,
                 earthquakes,
@@ -135,6 +138,9 @@ async function refreshAll() {
                 classifyAircraft,
                 getAircraftArrow
             );
+            console.log('renderGlobalMap completed');
+        } else {
+            console.log('Map panel disabled');
         }
         if (isPanelEnabled('mainchar')) {
             const mainCharRankings = calculateMainCharacter(allNews);
