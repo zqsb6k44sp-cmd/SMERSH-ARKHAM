@@ -220,10 +220,13 @@ export function updateFlashback(hoursAgo) {
 
 // Render the global map
 export async function renderGlobalMap(activityData, earthquakes = [], allNews = [], mapLayers, getMonitorHotspots, fetchFlightData, classifyAircraft, getAircraftArrow) {
+    console.log('renderGlobalMap called', { activityData, earthquakesCount: earthquakes.length, allNewsCount: allNews.length, mapLayers });
+
     // Cache allNews for popup access
     window.cachedAllNews = allNews;
 
     const panel = document.getElementById('mapPanel');
+    console.log('mapPanel element:', panel);
     const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
 
     const isUSView = mapViewMode === 'us';
@@ -319,6 +322,10 @@ export async function renderGlobalMap(activityData, earthquakes = [], allNews = 
             .center([0, 0])
             .translate([width / 2, height / 2]);
     }
+
+    // Test projection
+    const testCoord = projection([-77, 38.9]); // DC coordinates
+    console.log('Projection test (DC):', { input: [-77, 38.9], output: testCoord, width, height });
 
     const path = d3.geoPath().projection(projection);
 
@@ -677,11 +684,13 @@ export async function renderGlobalMap(activityData, earthquakes = [], allNews = 
 
     // Earthquake markers
     earthquakes.slice(0, 10).forEach((eq, index) => {
+        if (!eq || eq.mag === undefined || eq.mag === null) return;
         const pos = toPercent(eq.lon, eq.lat);
         if (!pos) return;
         const isMajor = eq.mag >= 6.0;
-        const eqData = encodeURIComponent(JSON.stringify({ mag: eq.mag, place: eq.place, time: eq.time, lat: eq.lat, lon: eq.lon, depth: eq.depth, id: eq.id || `eq_${index}` }));
-        overlaysHTML += `<div class="quake ${isMajor ? 'major' : ''}" style="left: ${pos.x}%; top: ${pos.y}%;" data-quake-id="eq_${index}" data-quake-info="${eqData}" onclick="showQuakePopup(event, 'eq_${index}')"><div class="quake-icon"></div><div class="quake-label">M${eq.mag.toFixed(1)}</div></div>`;
+        const mag = typeof eq.mag === 'number' ? eq.mag : parseFloat(eq.mag) || 0;
+        const eqData = encodeURIComponent(JSON.stringify({ mag: mag, place: eq.place, time: eq.time, lat: eq.lat, lon: eq.lon, depth: eq.depth, id: eq.id || `eq_${index}` }));
+        overlaysHTML += `<div class="quake ${isMajor ? 'major' : ''}" style="left: ${pos.x}%; top: ${pos.y}%;" data-quake-id="eq_${index}" data-quake-info="${eqData}" onclick="showQuakePopup(event, 'eq_${index}')"><div class="quake-icon"></div><div class="quake-label">M${mag.toFixed(1)}</div></div>`;
     });
 
     // Intel hotspots (global view only)
@@ -800,7 +809,26 @@ export async function renderGlobalMap(activityData, earthquakes = [], allNews = 
         </div>
     `;
 
-    document.getElementById('mapOverlays').innerHTML = overlaysHTML;
+    // Debug logging
+    console.log('Map render debug:', {
+        isRegionalView,
+        mapViewMode,
+        width,
+        height,
+        hotspotCount: INTEL_HOTSPOTS.length,
+        conflictCount: CONFLICT_ZONES.length,
+        chokepointCount: SHIPPING_CHOKEPOINTS.length,
+        overlaysHTMLLength: overlaysHTML.length,
+        mapOverlaysElement: document.getElementById('mapOverlays')
+    });
+
+    const mapOverlaysEl = document.getElementById('mapOverlays');
+    if (mapOverlaysEl) {
+        mapOverlaysEl.innerHTML = overlaysHTML;
+        console.log('Overlays inserted, child count:', mapOverlaysEl.children.length);
+    } else {
+        console.error('mapOverlays element not found!');
+    }
 
     // Initialize map pan functionality
     initMapPan();
