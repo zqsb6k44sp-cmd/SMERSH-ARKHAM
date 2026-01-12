@@ -24,7 +24,16 @@
 		Nifty50HeatmapPanel,
 		NiftyNext50HeatmapPanel
 	} from '$lib/components/panels';
-	import { news, markets, monitors, settings, refresh, allNewsItems, nifty50, niftyNext50 } from '$lib/stores';
+	import {
+		news,
+		markets,
+		monitors,
+		settings,
+		refresh,
+		allNewsItems,
+		nifty50,
+		niftyNext50
+	} from '$lib/stores';
 	import {
 		fetchAllNews,
 		fetchAllMarkets,
@@ -116,7 +125,7 @@
 
 		try {
 			const promises = [];
-			
+
 			if (isPanelVisible('nifty50')) {
 				nifty50.setLoading(true);
 				promises.push(
@@ -208,7 +217,13 @@
 		async function initialLoad() {
 			refresh.startRefresh();
 			try {
-				await Promise.all([loadNews(), loadMarkets(), loadMiscData(), loadWorldLeaders(), loadNiftyData()]);
+				await Promise.all([
+					loadNews(),
+					loadMarkets(),
+					loadMiscData(),
+					loadWorldLeaders(),
+					loadNiftyData()
+				]);
 				refresh.endRefresh();
 			} catch (error) {
 				refresh.endRefresh([String(error)]);

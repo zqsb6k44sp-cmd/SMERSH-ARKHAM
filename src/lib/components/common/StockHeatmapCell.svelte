@@ -23,7 +23,7 @@
 	}
 
 	const changeText = $derived(formatPercentChange(stock.changePercent));
-	
+
 	// Extract symbol without .NS suffix for display
 	const displaySymbol = $derived(stock.symbol.replace('.NS', ''));
 </script>
