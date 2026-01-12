@@ -184,8 +184,8 @@
 </script>
 
 <svelte:head>
-	<title>Situation Monitor</title>
-	<meta name="description" content="Real-time global situation monitoring dashboard" />
+	<title>SMERSH ARKHAM - Global geopolitical situation monitor</title>
+	<meta name="description" content="SMERSH ARKHAM - Global geopolitical situation monitor" />
 </svelte:head>
 
 <div class="app">
