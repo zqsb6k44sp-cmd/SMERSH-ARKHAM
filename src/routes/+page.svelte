@@ -225,9 +225,9 @@
 
 	// Initial load
 	onMount(() => {
-		// Check if first visit
+		// Auto-apply "everything" preset on first visit (skip onboarding modal)
 		if (!settings.isOnboardingComplete()) {
-			onboardingOpen = true;
+			settings.applyPreset('everything');
 		}
 
 		// Load initial data and track as refresh
