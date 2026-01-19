@@ -34,8 +34,7 @@
 		refresh,
 		allNewsItems,
 		nifty50,
-		niftyNext50,
-		bloomberg
+		niftyNext50
 	} from '$lib/stores';
 	import {
 		fetchAllNews,
@@ -46,8 +45,7 @@
 		fetchLayoffs,
 		fetchWorldLeaders,
 		fetchNifty50,
-		fetchNiftyNext50,
-		fetchBloombergFeed
+		fetchNiftyNext50
 	} from '$lib/api';
 	import type { Prediction, WhaleTransaction, Contract, Layoff } from '$lib/api';
 	import type { CustomMonitor, WorldLeader } from '$lib/types';
@@ -160,19 +158,6 @@
 		}
 	}
 
-	async function loadBloombergFeed() {
-		if (!isPanelVisible('bloomberg')) return;
-
-		try {
-			bloomberg.setLoading(true);
-			const data = await fetchBloombergFeed();
-			bloomberg.setItems(data);
-		} catch (error) {
-			console.error('Failed to load Bloomberg feed:', error);
-			bloomberg.setError(String(error));
-		}
-	}
-
 	// Refresh handlers
 	async function handleRefresh() {
 		refresh.startRefresh();
@@ -239,8 +224,7 @@
 					loadMarkets(),
 					loadMiscData(),
 					loadWorldLeaders(),
-					loadNiftyData(),
-					loadBloombergFeed()
+					loadNiftyData()
 				]);
 				refresh.endRefresh();
 			} catch (error) {
@@ -275,28 +259,13 @@
 			}
 		}
 
-		// Setup auto-refresh for Bloomberg feed (2 minutes)
-		async function refreshBloomberg() {
-			if (!isPanelVisible('bloomberg')) return;
-			try {
-				bloomberg.setLoading(true);
-				const data = await fetchBloombergFeed();
-				bloomberg.setItems(data);
-			} catch (error) {
-				console.error('Failed to refresh Bloomberg feed:', error);
-				bloomberg.setError(String(error));
-			}
-		}
-
 		nifty50.setupAutoRefresh(refreshNifty50);
 		niftyNext50.setupAutoRefresh(refreshNiftyNext50);
-		bloomberg.setupAutoRefresh(refreshBloomberg);
 
 		return () => {
 			refresh.stopAutoRefresh();
 			nifty50.stopAutoRefresh();
 			niftyNext50.stopAutoRefresh();
-			bloomberg.stopAutoRefresh();
 		};
 	});
 </script>
