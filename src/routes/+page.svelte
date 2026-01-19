@@ -321,16 +321,15 @@
 			<!-- Bloomberg Feed Panel -->
 			{#if isPanelVisible('bloomberg')}
 				<div class="panel-slot">
-					<iframe
-						width="1547"
-						height="869"
-						src="https://www.youtube.com/embed/iEpJwprxDdk"
-						title="Bloomberg Business News Live"
-						frameborder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-						referrerpolicy="strict-origin-when-cross-origin"
-						allowfullscreen
-					></iframe>
+					<div class="video-container">
+						<iframe
+							src="https://www.youtube.com/embed/iEpJwprxDdk"
+							title="Bloomberg Business News Live"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							referrerpolicy="strict-origin-when-cross-origin"
+							allowfullscreen
+						></iframe>
+					</div>
 				</div>
 			{/if}
 
@@ -595,6 +594,22 @@
 	.map-slot {
 		column-span: all;
 		margin-bottom: 0.5rem;
+	}
+
+	.video-container {
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%; /* 16:9 aspect ratio */
+		overflow: hidden;
+	}
+
+	.video-container iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: none;
 	}
 
 	@media (max-width: 768px) {
