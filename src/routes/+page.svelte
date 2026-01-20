@@ -25,7 +25,8 @@
 		PrinterPanel,
 		Nifty50HeatmapPanel,
 		NiftyNext50HeatmapPanel,
-		ConflictTrackerPanel
+		ConflictTrackerPanel,
+		DefenseStocksPanel
 	} from '$lib/components/panels';
 	import {
 		news,
@@ -35,7 +36,8 @@
 		refresh,
 		allNewsItems,
 		nifty50,
-		niftyNext50
+		niftyNext50,
+		defense
 	} from '$lib/stores';
 	import {
 		fetchAllNews,
@@ -46,7 +48,8 @@
 		fetchLayoffs,
 		fetchWorldLeaders,
 		fetchNifty50,
-		fetchNiftyNext50
+		fetchNiftyNext50,
+		fetchDefenseStocks
 	} from '$lib/api';
 	import type { Prediction, WhaleTransaction, Contract, Layoff } from '$lib/api';
 	import type { CustomMonitor, WorldLeader } from '$lib/types';
@@ -149,6 +152,18 @@
 						.catch((error) => {
 							console.error('Failed to load Nifty Next 50:', error);
 							niftyNext50.setError(String(error));
+						})
+				);
+			}
+
+			if (isPanelVisible('defense')) {
+				defense.setLoading(true);
+				promises.push(
+					fetchDefenseStocks()
+						.then((data) => defense.setItems(data))
+						.catch((error) => {
+							console.error('Failed to load Defense Stocks:', error);
+							defense.setError(String(error));
 						})
 				);
 			}
@@ -500,6 +515,13 @@
 			{#if isPanelVisible('printer')}
 				<div class="panel-slot">
 					<PrinterPanel />
+				</div>
+			{/if}
+
+			<!-- Defense Stocks Panel -->
+			{#if isPanelVisible('defense')}
+				<div class="panel-slot">
+					<DefenseStocksPanel />
 				</div>
 			{/if}
 

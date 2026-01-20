@@ -79,3 +79,6 @@ export {
 
 // Bloomberg store
 export { bloomberg, type BloombergState } from './bloomberg';
+
+// Defense store
+export { defense, type DefenseState } from './defense';
