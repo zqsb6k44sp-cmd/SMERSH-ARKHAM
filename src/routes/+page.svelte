@@ -24,7 +24,8 @@
 		WorldLeadersPanel,
 		PrinterPanel,
 		Nifty50HeatmapPanel,
-		NiftyNext50HeatmapPanel
+		NiftyNext50HeatmapPanel,
+		ConflictTrackerPanel
 	} from '$lib/components/panels';
 	import {
 		news,
@@ -513,6 +514,13 @@
 			{#if isPanelVisible('globalfishing')}
 				<div class="panel-slot map-slot">
 					<GlobalFishingWatchPanel />
+				</div>
+			{/if}
+
+			<!-- CFR Conflict Tracker Panel - Full width -->
+			{#if isPanelVisible('conflicttracker')}
+				<div class="panel-slot map-slot">
+					<ConflictTrackerPanel />
 				</div>
 			{/if}
 
