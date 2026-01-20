@@ -24,7 +24,9 @@
 		WorldLeadersPanel,
 		PrinterPanel,
 		Nifty50HeatmapPanel,
-		NiftyNext50HeatmapPanel
+		NiftyNext50HeatmapPanel,
+		ConflictTrackerPanel,
+		DefenseStocksPanel
 	} from '$lib/components/panels';
 	import {
 		news,
@@ -34,7 +36,8 @@
 		refresh,
 		allNewsItems,
 		nifty50,
-		niftyNext50
+		niftyNext50,
+		defense
 	} from '$lib/stores';
 	import {
 		fetchAllNews,
@@ -45,7 +48,8 @@
 		fetchLayoffs,
 		fetchWorldLeaders,
 		fetchNifty50,
-		fetchNiftyNext50
+		fetchNiftyNext50,
+		fetchDefenseStocks
 	} from '$lib/api';
 	import type { Prediction, WhaleTransaction, Contract, Layoff } from '$lib/api';
 	import type { CustomMonitor, WorldLeader } from '$lib/types';
@@ -148,6 +152,18 @@
 						.catch((error) => {
 							console.error('Failed to load Nifty Next 50:', error);
 							niftyNext50.setError(String(error));
+						})
+				);
+			}
+
+			if (isPanelVisible('defense')) {
+				defense.setLoading(true);
+				promises.push(
+					fetchDefenseStocks()
+						.then((data) => defense.setItems(data))
+						.catch((error) => {
+							console.error('Failed to load Defense Stocks:', error);
+							defense.setError(String(error));
 						})
 				);
 			}
@@ -502,6 +518,13 @@
 				</div>
 			{/if}
 
+			<!-- Defense Stocks Panel -->
+			{#if isPanelVisible('defense')}
+				<div class="panel-slot">
+					<DefenseStocksPanel />
+				</div>
+			{/if}
+
 			<!-- Fishing Map Panel - Full width -->
 			{#if isPanelVisible('fishing')}
 				<div class="panel-slot map-slot">
@@ -513,6 +536,13 @@
 			{#if isPanelVisible('globalfishing')}
 				<div class="panel-slot map-slot">
 					<GlobalFishingWatchPanel />
+				</div>
+			{/if}
+
+			<!-- CFR Conflict Tracker Panel - Full width -->
+			{#if isPanelVisible('conflicttracker')}
+				<div class="panel-slot map-slot">
+					<ConflictTrackerPanel />
 				</div>
 			{/if}
 
@@ -568,7 +598,7 @@
 	.video-container {
 		position: relative;
 		width: 100%;
-		padding-bottom: 56.25%; /* 16:9 aspect ratio */
+		padding-bottom: 112.5%; /* 2x 16:9 aspect ratio (doubled height) */
 		overflow: hidden;
 	}
 

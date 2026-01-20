@@ -23,7 +23,7 @@ export const REFRESH_STAGES: StageConfig[] = [
 	},
 	{
 		name: 'secondary',
-		categories: ['crypto', 'commodities', 'intel'],
+		categories: ['crypto', 'commodities', 'intel', 'defense'],
 		delayMs: 2000
 	},
 	{
