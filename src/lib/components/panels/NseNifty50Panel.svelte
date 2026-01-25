@@ -12,15 +12,6 @@
 	let widgetLoaded = $state(false);
 	let widgetError = $state<string | null>(null);
 
-	// Type declaration for TradingView
-	interface TradingViewWidget {
-		MediumSizeWidget: new (config: Record<string, unknown>) => void;
-	}
-
-	interface WindowWithTradingView extends Window {
-		TradingView?: TradingViewWidget;
-	}
-
 	onMount(() => {
 		// Load TradingView script dynamically
 		const script = document.createElement('script');
