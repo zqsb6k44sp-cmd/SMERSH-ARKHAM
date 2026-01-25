@@ -207,7 +207,7 @@
 
 			<!-- Bloomberg Feed Panel -->
 			{#if isPanelVisible('bloomberg')}
-				<div class="panel-slot map-slot">
+				<div class="panel-slot">
 					<div class="video-container">
 						<iframe
 							src="https://www.youtube.com/embed/iEpJwprxDdk"
@@ -251,6 +251,18 @@
 				</div>
 			{/if}
 
+			<!-- Markets Panels -->
+			{#if isPanelVisible('markets')}
+				<div class="panel-slot">
+					<MarketsPanel />
+				</div>
+			{/if}
+
+			{#if isPanelVisible('commodities')}
+				<div class="panel-slot">
+					<CommoditiesPanel />
+				</div>
+			{/if}
 
 			{#if isPanelVisible('crypto')}
 				<div class="panel-slot">
@@ -284,6 +296,12 @@
 				</div>
 			{/if}
 
+			<!-- World Leaders Panel -->
+			{#if isPanelVisible('leaders')}
+				<div class="panel-slot">
+					<WorldLeadersPanel {leaders} loading={leadersLoading} />
+				</div>
+			{/if}
 
 			<!-- Situation Panels -->
 			{#if isPanelVisible('venezuela')}
@@ -391,17 +409,10 @@
 				</div>
 			{/if}
 
-			<!-- US HEAT MAP Panel - Full width -->
+			<!-- NSE India Nifty 50 Panel - Full width -->
 			{#if isPanelVisible('nse50')}
 				<div class="panel-slot map-slot">
 					<NseNifty50Panel />
-				</div>
-			{/if}
-
-			<!-- Indian Markets Panel - Full width -->
-			{#if isPanelVisible('indianmarkets')}
-				<div class="panel-slot map-slot">
-					<IndianMarketsPanel />
 				</div>
 			{/if}
 

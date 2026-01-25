@@ -56,7 +56,7 @@
 	});
 </script>
 
-<Panel id="nse50" title="US HEAT MAP" {loading} error={error || widgetError}>
+<Panel id="indianmarkets" title="Indian Markets" {loading} error={error || widgetError}>
 	<div class="tradingview-widget-container" bind:this={widgetContainer}>
 		<div class="tradingview-widget-container__widget"></div>
 		{#if !widgetLoaded && !widgetError}
