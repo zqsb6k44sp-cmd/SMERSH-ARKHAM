@@ -475,10 +475,6 @@
 		margin-bottom: 0.5rem;
 	}
 
-	.panel-slot-wide {
-		break-inside: avoid;
-	}
-
 	/* Span 2 columns on 2-column layouts and above */
 	@media (min-width: 600px) {
 		.panel-slot-wide {
