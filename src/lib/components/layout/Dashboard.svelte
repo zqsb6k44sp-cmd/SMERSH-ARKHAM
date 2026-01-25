@@ -25,44 +25,40 @@
 	}
 
 	.dashboard-grid {
-		column-count: 1;
-		column-gap: 0.5rem;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
 		max-width: 2000px;
 		margin: 0 auto;
 	}
 
-	.dashboard-grid > :global(*) {
-		break-inside: avoid;
-		margin-bottom: 0.5rem;
-	}
-
 	@media (min-width: 600px) {
 		.dashboard-grid {
-			column-count: 2;
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	@media (min-width: 900px) {
 		.dashboard-grid {
-			column-count: 3;
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
 	@media (min-width: 1200px) {
 		.dashboard-grid {
-			column-count: 4;
+			grid-template-columns: repeat(4, 1fr);
 		}
 	}
 
 	@media (min-width: 1600px) {
 		.dashboard-grid {
-			column-count: 5;
+			grid-template-columns: repeat(5, 1fr);
 		}
 	}
 
 	@media (min-width: 2000px) {
 		.dashboard-grid {
-			column-count: 6;
+			grid-template-columns: repeat(6, 1fr);
 		}
 	}
 </style>

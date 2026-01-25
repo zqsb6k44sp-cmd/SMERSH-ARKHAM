@@ -471,14 +471,25 @@
 	}
 
 	.map-slot {
-		column-span: all;
-		margin-bottom: 0.5rem;
+		grid-column: 1 / -1; /* Span all columns */
 	}
 
 	/* Span 2 columns on 2-column layouts and above */
-	@media (min-width: 600px) {
+	.panel-slot-wide {
+		grid-column: span 2;
+	}
+
+	/* On single-column layouts, don't span */
+	@media (max-width: 599px) {
 		.panel-slot-wide {
-			width: calc(200% + 0.5rem);
+			grid-column: span 1;
+		}
+	}
+
+	/* On 3-column and larger layouts, still span only 2 */
+	@media (min-width: 900px) {
+		.panel-slot-wide {
+			grid-column: span 2;
 		}
 	}
 
