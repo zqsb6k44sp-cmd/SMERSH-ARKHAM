@@ -19,7 +19,7 @@
 		script.async = true;
 		script.type = 'text/javascript';
 		script.innerHTML = JSON.stringify({
-			dataSource: 'AllIN',
+			dataSource: 'India',
 			exchanges: [],
 			grouping: 'sector',
 			blockSize: 'market_cap_basic',
@@ -69,7 +69,7 @@
 	.tradingview-widget-container {
 		position: relative;
 		width: 100%;
-		height: 100%;
+		aspect-ratio: 2 / 1;
 		background: #0a0f0d;
 		border-radius: 4px;
 		overflow: hidden;
@@ -78,7 +78,6 @@
 	.tradingview-widget-container__widget {
 		width: 100%;
 		height: 100%;
-		min-height: 500px;
 	}
 
 	.loading-state {
@@ -88,11 +87,5 @@
 		transform: translate(-50%, -50%);
 		color: var(--text-secondary);
 		font-size: 0.875rem;
-	}
-
-	@media (max-width: 768px) {
-		.tradingview-widget-container__widget {
-			min-height: 400px;
-		}
 	}
 </style>
