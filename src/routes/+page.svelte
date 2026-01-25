@@ -4,8 +4,6 @@
 	import { SettingsModal, MonitorFormModal, OnboardingModal } from '$lib/components/modals';
 	import {
 		NewsPanel,
-		MarketsPanel,
-		CommoditiesPanel,
 		CryptoPanel,
 		MainCharPanel,
 		CorrelationPanel,
@@ -20,11 +18,11 @@
 		LayoffsPanel,
 		IntelPanel,
 		SituationPanel,
-		WorldLeadersPanel,
 		PrinterPanel,
 		ConflictTrackerPanel,
 		DefenseStocksPanel,
-		NseNifty50Panel
+		NseNifty50Panel,
+		IndianMarketsPanel
 	} from '$lib/components/panels';
 	import { news, markets, monitors, settings, refresh, allNewsItems, defense } from '$lib/stores';
 	import {
@@ -34,11 +32,10 @@
 		fetchWhaleTransactions,
 		fetchGovContracts,
 		fetchLayoffs,
-		fetchWorldLeaders,
 		fetchDefenseStocks
 	} from '$lib/api';
 	import type { Prediction, WhaleTransaction, Contract, Layoff } from '$lib/api';
-	import type { CustomMonitor, WorldLeader } from '$lib/types';
+	import type { CustomMonitor } from '$lib/types';
 	import type { PanelId } from '$lib/config';
 
 	// Modal state
@@ -52,8 +49,6 @@
 	let whales = $state<WhaleTransaction[]>([]);
 	let contracts = $state<Contract[]>([]);
 	let layoffs = $state<Layoff[]>([]);
-	let leaders = $state<WorldLeader[]>([]);
-	let leadersLoading = $state(false);
 
 	// Data fetching
 	async function loadNews() {
@@ -97,18 +92,6 @@
 			layoffs = layoffsData;
 		} catch (error) {
 			console.error('Failed to load misc data:', error);
-		}
-	}
-
-	async function loadWorldLeaders() {
-		if (!isPanelVisible('leaders')) return;
-		leadersLoading = true;
-		try {
-			leaders = await fetchWorldLeaders();
-		} catch (error) {
-			console.error('Failed to load world leaders:', error);
-		} finally {
-			leadersLoading = false;
 		}
 	}
 
@@ -189,7 +172,6 @@
 					loadNews(),
 					loadMarkets(),
 					loadMiscData(),
-					loadWorldLeaders(),
 					loadDefenseData()
 				]);
 				refresh.endRefresh();
@@ -225,7 +207,7 @@
 
 			<!-- Bloomberg Feed Panel -->
 			{#if isPanelVisible('bloomberg')}
-				<div class="panel-slot">
+				<div class="panel-slot map-slot">
 					<div class="video-container">
 						<iframe
 							src="https://www.youtube.com/embed/iEpJwprxDdk"
@@ -269,18 +251,6 @@
 				</div>
 			{/if}
 
-			<!-- Markets Panels -->
-			{#if isPanelVisible('markets')}
-				<div class="panel-slot">
-					<MarketsPanel />
-				</div>
-			{/if}
-
-			{#if isPanelVisible('commodities')}
-				<div class="panel-slot">
-					<CommoditiesPanel />
-				</div>
-			{/if}
 
 			{#if isPanelVisible('crypto')}
 				<div class="panel-slot">
@@ -314,12 +284,6 @@
 				</div>
 			{/if}
 
-			<!-- World Leaders Panel -->
-			{#if isPanelVisible('leaders')}
-				<div class="panel-slot">
-					<WorldLeadersPanel {leaders} loading={leadersLoading} />
-				</div>
-			{/if}
 
 			<!-- Situation Panels -->
 			{#if isPanelVisible('venezuela')}
@@ -427,10 +391,17 @@
 				</div>
 			{/if}
 
-			<!-- NSE India Nifty 50 Panel - Full width -->
+			<!-- US HEAT MAP Panel - Full width -->
 			{#if isPanelVisible('nse50')}
 				<div class="panel-slot map-slot">
 					<NseNifty50Panel />
+				</div>
+			{/if}
+
+			<!-- Indian Markets Panel - Full width -->
+			{#if isPanelVisible('indianmarkets')}
+				<div class="panel-slot map-slot">
+					<IndianMarketsPanel />
 				</div>
 			{/if}
 

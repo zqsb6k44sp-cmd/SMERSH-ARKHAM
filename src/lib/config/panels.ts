@@ -14,9 +14,7 @@ export type PanelId =
 	| 'tech'
 	| 'finance'
 	| 'gov'
-	| 'markets'
 	| 'monitors'
-	| 'commodities'
 	| 'crypto'
 	| 'polymarket'
 	| 'whales'
@@ -28,11 +26,11 @@ export type PanelId =
 	| 'venezuela'
 	| 'greenland'
 	| 'iran'
-	| 'leaders'
 	| 'intel'
 	| 'correlation'
 	| 'narrative'
 	| 'nse50'
+	| 'indianmarkets'
 	| 'fishing'
 	| 'globalfishing'
 	| 'marinetraffic'
@@ -46,9 +44,7 @@ export const PANELS: Record<PanelId, PanelConfig> = {
 	tech: { name: 'Technology / AI', priority: 1 },
 	finance: { name: 'Financial', priority: 1 },
 	gov: { name: 'Government / Policy', priority: 2 },
-	markets: { name: 'Markets', priority: 1 },
 	monitors: { name: 'My Monitors', priority: 1 },
-	commodities: { name: 'Commodities / VIX', priority: 2 },
 	crypto: { name: 'Crypto', priority: 2 },
 	polymarket: { name: 'Polymarket', priority: 2 },
 	whales: { name: 'Whale Watch', priority: 3 },
@@ -60,11 +56,11 @@ export const PANELS: Record<PanelId, PanelConfig> = {
 	venezuela: { name: 'Venezuela Situation', priority: 2 },
 	greenland: { name: 'Greenland Situation', priority: 2 },
 	iran: { name: 'Iran Situation', priority: 2 },
-	leaders: { name: 'World Leaders', priority: 1 },
 	intel: { name: 'Intel Feed', priority: 2 },
 	correlation: { name: 'Correlation Engine', priority: 1 },
 	narrative: { name: 'Narrative Tracker', priority: 1 },
-	nse50: { name: 'NSE India Nifty 50', priority: 2 },
+	nse50: { name: 'US Heat Map', priority: 2 },
+	indianmarkets: { name: 'Indian Markets', priority: 2 },
 	fishing: { name: 'Deep Sea Fishing Traffic', priority: 2 },
 	globalfishing: { name: 'Global Fishing Watch', priority: 2 },
 	marinetraffic: { name: 'Marine Traffic', priority: 3 },
