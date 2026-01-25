@@ -207,7 +207,7 @@
 
 			<!-- Bloomberg Feed Panel -->
 			{#if isPanelVisible('bloomberg')}
-				<div class="panel-slot map-slot">
+				<div class="panel-slot panel-slot-wide">
 					<div class="video-container">
 						<iframe
 							src="https://www.youtube.com/embed/iEpJwprxDdk"
@@ -419,7 +419,7 @@
 				</div>
 			{/if}
 
-			<!-- CFR Conflict Tracker Panel - Full width -->
+			<!-- War Watch Panel - Full width -->
 			{#if isPanelVisible('conflicttracker')}
 				<div class="panel-slot map-slot">
 					<ConflictTrackerPanel />
@@ -475,10 +475,17 @@
 		margin-bottom: 0.5rem;
 	}
 
+	/* Span 2 columns on 2-column layouts and above */
+	@media (min-width: 600px) {
+		.panel-slot-wide {
+			width: calc(200% + 0.5rem);
+		}
+	}
+
 	.video-container {
 		position: relative;
 		width: 100%;
-		padding-bottom: 112.5%; /* 2x 16:9 aspect ratio (doubled height) */
+		padding-bottom: 56.25%; /* 16:9 aspect ratio */
 		overflow: hidden;
 	}
 
