@@ -2,7 +2,8 @@
  * Defense Stocks API - Fetch top defense stocks from Yahoo Finance
  */
 
-import { logger, fetchWithProxy } from '$lib/config/api';
+import { logger } from '$lib/config/api';
+import { fetchYahooQuotes } from './yahoo-finance';
 
 export interface DefenseStock {
 	symbol: string;
@@ -12,53 +13,6 @@ export interface DefenseStock {
 	change: number;
 	changePercent: number;
 	logoUrl: string;
-}
-
-interface YahooQuoteResponse {
-	quoteResponse: {
-		result: Array<{
-			symbol: string;
-			regularMarketPrice?: number;
-			regularMarketChange?: number;
-			regularMarketChangePercent?: number;
-		}>;
-		error: null | { code: string; description: string };
-	};
-}
-
-/**
- * Fetch quotes from Yahoo Finance
- */
-async function fetchYahooQuotes(
-	symbols: string[]
-): Promise<Map<string, YahooQuoteResponse['quoteResponse']['result'][0]>> {
-	const quotesMap = new Map();
-
-	try {
-		const symbolsParam = symbols.join(',');
-		const yahooUrl = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbolsParam}`;
-
-		logger.log('Defense API', `Fetching quotes for ${symbols.length} symbols from Yahoo Finance`);
-
-		const response = await fetchWithProxy(yahooUrl);
-
-		if (!response.ok) {
-			throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-		}
-
-		const data: YahooQuoteResponse = await response.json();
-
-		if (data.quoteResponse?.result) {
-			data.quoteResponse.result.forEach((quote) => {
-				quotesMap.set(quote.symbol, quote);
-			});
-		}
-
-		return quotesMap;
-	} catch (error) {
-		logger.error('Defense API', 'Error fetching Yahoo Finance quotes:', error);
-		return quotesMap;
-	}
 }
 
 /**
