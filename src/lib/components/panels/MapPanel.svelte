@@ -770,11 +770,12 @@
 						.on('mousemove', moveTooltip)
 						.on('mouseleave', hideTooltip)
 						.on('click', (event: MouseEvent) => {
+							if (!m.location) return;
 							toggleSelection({
 								type: 'monitor',
 								data: m,
-								lat: m.location!.lat,
-								lon: m.location!.lon,
+								lat: m.location.lat,
+								lon: m.location.lon,
 								name: m.name,
 								color
 							}, event);
