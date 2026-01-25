@@ -62,7 +62,7 @@ export {
 	autoRefreshEnabled,
 	timeSinceRefresh,
 	categoriesWithErrors,
-	REFRESH_STAGES,
+	REFRESH_STAGES, REFRESH_INTERVALS,
 	type RefreshStage,
 	type StageConfig,
 	type RefreshState
